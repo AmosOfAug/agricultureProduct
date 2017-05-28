@@ -20,6 +20,7 @@
     <result column="sex" property="sex"/>
     <result column="role" property="role"/>
     <result column="avatar" property="avatar"/>
+    <result column="create_time" property="createTime"/>
     <result column="update_time" property="updateTime"/>
     <result column="identify_id" property="identifyId"/>
     <result column="business_address" property="businessAddress"/>
@@ -64,7 +65,7 @@
   <select id="getUserByName" parameterType="String" resultMap="userMap">
       <![CDATA[
           SELECT
-              user_id,user_name,password,role,phone,avatar,sex,business_address,update_time,identify_id,business_descripe
+              user_id,user_name,password,role,phone,avatar,sex,business_address,create_time,update_time,identify_id,business_descripe
           FROM
               user
           WHERE
@@ -77,13 +78,13 @@
   <select id="queryAllUser" resultMap="userMap" parameterType="map">
         <![CDATA[
             SELECT
-              user_id,user_name,password,role,phone,avatar,sex,business_address,update_time,identify_id,business_descripe
+              user_id,user_name,password,role,phone,avatar,sex,business_address,create_time,update_time,identify_id,business_descripe
             FROM
               user
             WHERE 
                 is_deleted = 0
             ORDER BY
-                modified DESC
+                update_time DESC
             LIMIT
                 #{pageSize}
             OFFSET
@@ -94,11 +95,11 @@
    <select id="getUserById" parameterType="int" resultMap="userMap">
       <![CDATA[
           SELECT
-              user_id,user_name,password,role,phone,avatar,sex,business_address,update_time,identify_id,business_descripe
+              user_id,user_name,password,role,phone,avatar,sex,business_address,create_time,update_time,identify_id,business_descripe
           FROM
               user
           WHERE
-              user_id = #{userName}
+              user_id = #{userId}
           AND
               is_deleted = 0
       ]]>
@@ -107,7 +108,7 @@
   <select id="getUserCount" resultType="Integer">
         <![CDATA[
             SELECT
-                count(id)
+                count(user_id)
             FROM
                 user
             WHERE 
@@ -147,15 +148,15 @@
   <update id="updateUser" parameterType="User">
       <![CDATA[
           UPDATE user
-          SET password = #{password}, gender = #{gender}, email = #{email}, address = #{address}, fulle_name = #{fullName}, telephone_number = #{phone}
-          WHERE pk_id = #{id}
+          SET sex = #{sex}, phone = #{phone},user_name = #{userName}, role = #{role}, update_time = NOW()
+          WHERE user_id = #{userId}
       ]]>
   </update>
   <update id="updateUserNoPassword" parameterType="User">
       <![CDATA[
-          UPDATE oes.users 
-          SET gender = #{gender}, email = #{email}, address = #{address}, fulle_name = #{fullName}, telephone_number = #{phone}
-          WHERE pk_id = #{id}
+          UPDATE user
+          SET sex = #{sex}, phone = #{phone},user_name = #{userName},update_time = NOW()
+          WHERE user_id = #{userId}
       ]]>
   </update>
 </mapper>

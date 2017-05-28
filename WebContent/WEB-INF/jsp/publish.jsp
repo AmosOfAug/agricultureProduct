@@ -9,154 +9,250 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>商品发布</title>
 <link href="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/css/lib/bootstrap.min.css" rel="stylesheet">
-<link href="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/css/style.css" rel="stylesheet">
-<link href="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/css/basic.css" rel="stylesheet">
-<link href="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/css/bootstrap.css" rel="stylesheet">
-<link href="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/css/home.css" rel="stylesheet">
-<link href="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/css/publish.css" rel="stylesheet">
-    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL) %>/static/js/lib/jquery-3.1.1.min.js"></script>
+<script src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/js/lib/bootstrap.min.js"></script>
 </head>
 <body>
     <!--header start here-->
-    <jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="top.jsp"></jsp:include>
     <div style="height:60px;"></div>
    <!--header end here-->
    <div class="row">
-                    <form class="form-horizontal" action="<%=PathUtil.getFullPath("goods/create")%>" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">商品名称:</label>
-                            <div class="col-md-8">
-                                <div class="input-group">                           
-                                    <input id="goodsName" name="goodsName" type="text" class="form-control1" placeholder="商品名称">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">商品价格:</label>
-                            <div class="col-md-8">
-                                <div class="input-group">                           
-                                    <input id="price" name="price" type="text" class="form-control1" placeholder="商品价格">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">价格单位:</label>
-                            <div class="col-md-3">
-                              <select class="selectpicker form-control1 ng-invalid ng-invalid-required" ng-model="model.select" id="rangeSelect" name="unit">
-                                <option>选择价格单位</option>
-                                   <option  value="g">g</option>
-                                   <option  value="50g">50g</option>
-                                   <option  value="500g">500g</option>
-                                   <option  value="1000g">1000g</option>
-                                   <option  value="两">两</option>
-                                   <option  value="斤">斤</option>
-                              </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">商品类型:</label>
-                            <div class="col-md-3">
-                              <select class="selectpicker form-control1 ng-invalid ng-invalid-required" ng-model="model.select" id="multiselect" name="type">
-                                <option>选择商品类型</option>
-                                    <option  value="水果">水果</option>
-                                    <option  value="蔬菜">蔬菜</option>
-                                    <option  value="牧畜水产">牧畜水产</option>
-                                    <option  value="粮油米面">粮油米面</option>
-                                    <option  value="农副加工">农副加工</option>
-                              </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">商品图片:</label>
-                            <div class="col-md-3">
-                                <img src="/static_img/${Video.image }" alt="" style="width: 200px;height: 150px;">
-                                <button class="btn" type="button" onclick="exampleInputFile.click()">上传</button>
-                                <input name="picture" type="file" id="exampleInputFile" style="visibility: hidden; position: absolute;">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">商品描述:</label>
-                            <div class="col-md-8">
-                                <textarea name="description" class="form-control" rows="12"></textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-8 col-sm-offset-2">
-                                <button class="btn-success btn" type="submit" id="publishBtn">发布</button>
-                                <button class="btn-default btn" id="cancelBtn">取消</button>
-                            </div>
-                        </div>
-                    </form>
+      <form class="form-horizontal" action="<%=PathUtil.getFullPath("goods/create")%>" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+              <label class="col-md-2 control-label">商品名称:</label>
+              <div class="col-md-8">
+                  <div class="input-group">                           
+                      <input id="goodsName" name="goodsName" type="text" class="form-control1" placeholder="商品名称">
+                  </div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-md-2 control-label">商品价格:</label>
+              <div class="col-md-8">
+                  <div class="input-group">                           
+                      <input id="price" name="price" type="text" class="form-control1" placeholder="商品价格">
+                  </div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-md-2 control-label">价格单位:</label>
+              <div class="col-md-3">
+                <select class="selectpicker form-control1 ng-invalid ng-invalid-required" ng-model="model.select" id="rangeSelect" name="unit">
+                  <option>选择价格单位</option>
+                     <option  value="g">g</option>
+                     <option  value="50g">50g</option>
+                     <option  value="500g">500g</option>
+                     <option  value="1000g">1000g</option>
+                     <option  value="两">两</option>
+                     <option  value="斤">斤</option>
+                </select>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-md-2 control-label">商品类型:</label>
+              <div class="col-md-3">
+                <select class="selectpicker form-control1 ng-invalid ng-invalid-required" ng-model="model.select" id="goodTypeSelect" name="type">
+                      <c:forEach items="${publishGoodsType}" var="n" varStatus="tg">
+                          <option  value="${n.id}">${n.type}</option>
+                      </c:forEach>
+                </select>
+                <select multiple class="form-control" style="margin-top: 10px;" name="types" id="productTypeSelect">
+                      <c:forEach items="${publishGoodsType}" var="n" begin="0" end="0" step="1">
+                          <c:forEach items="${n.productTypes}" var="m">
+                              <option  value="${m.id}">${m.type }</option>
+                          </c:forEach>
+                      </c:forEach>
+                </select>
                     </div>
-   
-<!-- modal -->
-<!-- 模态框（Modal） -->
-                <div class="modal fade" id="denglu" tabindex="-1" role="dialog" 
-                   aria-labelledby="myModalLabel" aria-hidden="true">
-                   <div class="modal-dialog">
-                      <div class="modal-content text-center">
-                         <div class="modal-header text-center">
-                            <button type="button" class="close" 
-                               data-dismiss="modal" aria-hidden="true">
-                                  &times;
-                            </button>
-                            <h1 class="modal-title" id="myModalLabel">
-                               农园账号登录
-                            </h1>
-                         </div>
-                         <div class="modal-body text-center" style="text-align:center;">
-                          <form action="<%=PathUtil.getFullPath(Constant.LOGIN_URL_PAGE)%>" method="POST">
-                           <input class="item_account" autocomplete="off" type="text" name="userName" id="userName" placeholder="邮箱/手机号码/农园帐号">
-                           <input type="password" placeholder="密码" name="password" id="password">
-                           <input class="btnadpt btn_orange" id="login-button" type="submit" value="立即登录">
-                         </form>
-                            <fieldset class="oth_type_tit">
-                              <legend style="text-align:center;" class="oth_type_txt">其他方式登录</legend>
-                            </fieldset>
-                            <img src="images/qq.png" alt="">
-                            <img src="images/weobo.png" alt="">
-                            <img src="images/zhifubao.png" alt="">
-                         </div>
-                         <a href="">
-                              <a class="link" data-toggle="modal" data-target="#zhuce" href="#"><span>注册农园账号</span></a>
-                              <span>|</span>
-                              <span>忘记密码</span>
-                            </a>
-                      </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
                 </div>
-                
-                 <!-- 模态框(Modal)2 -->
-                <div class="modal fade" id="zhuce" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                   <div class="modal-dialog">
-                      <div class="modal-content text-center">
-                         <div class="modal-header text-center">
-                            <button type="button" class="close" 
-                               data-dismiss="modal" aria-hidden="true">
-                                  &times;
-                            </button>
-                            <h1 class="modal-title" id="myModalLabel">
-                               注册农园账号
-                            </h1>
-                         </div>
-                         <div class="modal-body text-center">
-                          <form>
-                           <input class="item_account" autocomplete="off" type="text" name="user" id="username" placeholder="中国(+86)">
-                           <input type="tel" placeholder="请输入手机号" name="pwd" id="pwd">
-                           <input style="width:170px;" class="code" type="text" name="icode" autocomplete="off" placeholder="图片验证码">
-                           <img style="margin-top:-47px;float:right;" alt="图片验证码" title="看不清换一张" class="icode_image" src="img/yzm.png">
-                           <input class="btnadpt btn_orange" id="login-button" type="submit" value="立即注册">
-                           </form>
-                            <p class="msg">
-                            点击“立即注册”，即表示您同意并愿意遵守农园
-                            <a href="http://www.miui.com/res/doc/eula/cn.html" target="_blank" title="用户协议">用户协议</a>
-                            和
-                            <a href="http://www.miui.com/res/doc/privacy/cn.html" target="_blank" title="隐私政策">隐私政策</a>
-                            </p>
-                      </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
+                <div class="form-group" id="descripeDiv">
+                <c:forEach items="${publishGoodsDescripe}" var="n" begin="0" step="1" varStatus="tg">
+			        <label class="col-md-2 control-label">${n.descripe}:</label>
+			        <c:if test="${tg.index==0}">
+                       <div class="col-md-10">
+				            <ul class="list-inline" style="margin-bottom:0px;margin-top:6px;">
+				                <c:forEach items="${n.values }" var="m">
+				                    <li><input type="radio" name="values1" value="${m.id }"/>${m.value }</li>   
+				                </c:forEach>
+				            </ul>
+				       </div> 
+                    </c:if>
+                    <c:if test="${tg.index==1}">
+                       <div class="col-md-10">
+				            <ul class="list-inline" style="margin-bottom:0px;margin-top:6px;">
+				                <c:forEach items="${n.values }" var="m">
+				                    <li><input type="radio" name="values2" value="${m.id }"/>${m.value }</li>   
+				                </c:forEach>
+				            </ul>
+				       </div> 
+                    </c:if>
+                    <c:if test="${tg.index==2}">
+                       <div class="col-md-10">
+				            <ul class="list-inline" style="margin-bottom:0px;margin-top:6px;">
+				                <c:forEach items="${n.values }" var="m">
+				                    <li><input type="radio" name="values3" value="${m.id }"/>${m.value }</li>   
+				                </c:forEach>
+				            </ul>
+				       </div> 
+                    </c:if>
+			        
+			    </c:forEach> 
+          </div>
+          <div class="form-group">
+              <label class="col-md-2 control-label">商品图片:</label>
+              <div class="col-md-10">
+                  <div class="form-group">
+		              <div class="col-md-10">
+						 <a type="button" onclick="file0.click()" id="image_button" class="btn btn-default">添加</a>
+		                  <input type="file" name="file0" id="file0" style="visibility: hidden; position: absolute;"/><br>
+		                  <img src="" id="img0" style="width: 50%;height: 50%;">
+		              </div>
+		          </div>
               </div>
+          </div>
+          <div class="form-group">
+              <label class="col-md-2 control-label">商品描述:</label>
+              <div class="col-md-10">
+                  <div class="form-group">
+		              <div class="col-md-8">
+		                  <textarea name="description" class="form-control" rows="6"></textarea>
+		              </div>
+		          </div>
+	          </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-8 col-sm-offset-2">
+                  <button class="btn-success btn" type="submit" id="publishBtn">发布</button>
+                  <button class="btn-default btn" id="cancelBtn">取消</button>
               </div>
-</body>
+          </div>
+      </form>
+      </div>
+      <script type="text/javascript">
+	      $("#submit_image").click(function() {
+	      	$("#image_modal").modal('show');
+	      });
+	      $("#file0").change(function(){
+	    		var objUrl = getObjectURL(this.files[0]) ;
+	    		console.log("objUrl = "+objUrl) ;
+	    		if (objUrl) {
+	    			$("#img0").attr("src", objUrl) ;
+	    			$("#image_button").text("修改");
+	    		}
+	      });
+	      function getObjectURL(file) {
+	    		var url = null ; 
+	    		if (window.createObjectURL!=undefined) { // basic
+	    			url = window.createObjectURL(file) ;
+	    		} else if (window.URL!=undefined) { // mozilla(firefox)
+	    			url = window.URL.createObjectURL(file) ;
+	    		} else if (window.webkitURL!=undefined) { // webkit or chrome
+	    			url = window.webkitURL.createObjectURL(file) ;
+	    		}
+	    		return url ;
+	    	};
+	    	$('#goodTypeSelect').change(function(){
+				var goodsId = $(this).children('option:selected').val();
+				var u = "/AgricultureProduct/page/goods/goods-type-change/" + goodsId;
+				$.ajax({
+		             type: "GET",
+		             url: u,
+		             dataType:"json",  
+		             async:false,  
+		             cache:false,
+		             success: function(data){
+		            	 $('#productTypeSelect').empty(); 
+		                 for(var i in data.productType) {
+	                         $('#productTypeSelect').append("<option value='"+data.productType[i].id+"'>"+data.productType[i].type+"</option>")
+		                 }
+		                 $('#descripeDiv').empty();
+		                 var tbody='';
+		                 for(var i in data.descripeType) {
+	                         if(i==0){
+	                        	 tbody+='<label class="col-md-2 control-label">'+data.descripeType[i].descripe+':</label>';
+                                 tbody+='<div class="col-md-10">';
+                                 tbody+='<ul class="list-inline" style="margin-bottom:0px;margin-top:6px;">';
+                                 
+                                 for(var b in data.descripeType[i].values) {
+                                	 tbody+='<li><input type="radio" name="values1" value="'+data.descripeType[i].values[b].id+'"/>'+data.descripeType[i].values[b].value+'</li>';
+                                 }
+	 				             tbody+='</ul>';
+	 				             tbody+='</div>';
+	                         }
+	                         if(i==1){
+	                        	 tbody+='<label class="col-md-2 control-label">'+data.descripeType[i].descripe+':</label>';
+                                 tbody+='<div class="col-md-10">';
+                                 tbody+='<ul class="list-inline" style="margin-bottom:0px;margin-top:6px;">';
+                                 for(var b in data.descripeType[i].values) {
+                                	 tbody+='<li><input type="radio" name="values2" value="'+data.descripeType[i].values[b].id+'"/>'+data.descripeType[i].values[b].value+'</li>';
+                                 }
+	 				             tbody+='</ul>';
+	 				             tbody+='</div>';
+	                         }
+	                         if(i==2){
+	                        	 tbody+='<label class="col-md-2 control-label">'+data.descripeType[i].descripe+':</label>';
+                                 tbody+='<div class="col-md-10">';
+                                 tbody+='<ul class="list-inline" style="margin-bottom:0px;margin-top:6px;">';
+                                 for(var b in data.descripeType[i].values) {
+                                	 tbody+='<li><input type="radio" name="values3" value="'+data.descripeType[i].values[b].id+'"/>'+data.descripeType[i].values[b].value+'</li>';
+                                 }
+	 				             tbody+='</ul>';
+	 				             tbody+='</div>';
+	                         }
+	                         $('#descripeDiv').html(tbody);
+		                 }
+		            }
+		         });
+	    	});
+	    	$("#productTypeSelect").click(function() {
+	    		var productTypeId = $(this).children('option:selected').val();
+	    		$.ajax({
+		             type: "GET",
+		             url: "/AgricultureProduct/page/goods/get-descripe-by-productType/" + productTypeId,
+		             dataType:"json",  
+		             async:false,  
+		             cache:false,
+		             success: function(data){
+		                 $('#descripeDiv').empty();
+		                 var tbody='';
+		                 for(var i in data.descripeType) {
+	                         if(i==0){
+	                        	 tbody+='<label class="col-md-2 control-label">'+data.descripeType[i].descripe+':</label>';
+                                tbody+='<div class="col-md-10">';
+                                tbody+='<ul class="list-inline" style="margin-bottom:0px;margin-top:6px;">';
+                                
+                                for(var b in data.descripeType[i].values) {
+                               	 tbody+='<li><input type="radio" name="values1" value="'+data.descripeType[i].values[b].id+'"/>'+data.descripeType[i].values[b].value+'</li>';
+                                }
+	 				             tbody+='</ul>';
+	 				             tbody+='</div>';
+	                         }
+	                         if(i==1){
+	                        	 tbody+='<label class="col-md-2 control-label">'+data.descripeType[i].descripe+':</label>';
+                                tbody+='<div class="col-md-10">';
+                                tbody+='<ul class="list-inline" style="margin-bottom:0px;margin-top:6px;">';
+                                for(var b in data.descripeType[i].values) {
+                               	 tbody+='<li><input type="radio" name="values2" value="'+data.descripeType[i].values[b].id+'"/>'+data.descripeType[i].values[b].value+'</li>';
+                                }
+	 				             tbody+='</ul>';
+	 				             tbody+='</div>';
+	                         }
+	                         if(i==2){
+	                        	 tbody+='<label class="col-md-2 control-label">'+data.descripeType[i].descripe+':</label>';
+                                tbody+='<div class="col-md-10">';
+                                tbody+='<ul class="list-inline" style="margin-bottom:0px;margin-top:6px;">';
+                                for(var b in data.descripeType[i].values) {
+                               	 tbody+='<li><input type="radio" name="values3" value="'+data.descripeType[i].values[b].id+'"/>'+data.descripeType[i].values[b].value+'</li>';
+                                }
+	 				             tbody+='</ul>';
+	 				             tbody+='</div>';
+	                         }
+	                         $('#descripeDiv').html(tbody);
+		                 }
+		            }
+		         });
+		      });
+      </script>            
+  </body>
 </html>

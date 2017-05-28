@@ -89,23 +89,31 @@
             </div>
             <div class="col-md-2" style="margin-left:-84px;">
                 <div class="col-md-12" style="margin-top:20px;">
-                    <h5>2017-5-08 13:31:23</h5>
+                    <h5 id="currentTime"></h5>
                     <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/test4.jpg"></img>
                     <h5>it's time guyu</h5>
                 </div>
                 <div class="col-md-12" style="border: 1px solid #EEE;margin-left:16px;width:204px;">
-                    <div class="row">
-                        <div class="col-md-6 pull-left">
-                            <button class="btn btn-large btn-primary" style="width:100px;background-color:#009237;margin-left:-16px;">
-                                                                                    登陆
-                            </button>
+                    <% if(request.getSession().getAttribute("USER") == null){ %>
+                        <div class="row">
+	                        <div class="col-md-6 pull-left">
+	                            <button class="btn btn-large btn-primary" style="width:100px;background-color:#009237;margin-left:-16px;">
+	                                                                                    登陆
+	                            </button>
+	                        </div>
+	                        <div class="col-md-6">
+	                            <button class="btn btn-large btn-primary" style="width:100px;margin-left:-15px;background-color:#009237;">
+	                                                                                     免费注册
+	                            </button>
+	                        </div>
+	                    </div>
+                    <% } else { %>
+                        <div class="row">
+                            <div class="col-md-12" style="text-align:center;margin-top:3px;">
+                                <a href="#"><span style="color:red;">您好，${USER.userName}</span></a>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-large btn-primary" style="width:100px;margin-left:-15px;background-color:#009237;">
-                                                                                     免费注册
-                            </button>
-                        </div>
-                    </div>
+                    <%}%>
                     <div class="row" style="margin-top:30px;">
                         <div class="tabbable">
                             <ul class="nav nav-tabs">
@@ -115,13 +123,13 @@
                             </ul>
                             <div class="tab-content" style="height:111px;">
                                 <div class="tab-pane active" id="tab1">
-                                    <p>I'm in Section 1.</p>
+                                    <p>暂无公告</p>
                                 </div>
                                 <div class="tab-pane" id="tab2">
-                                    <p>Howdy, I'm in Section 2.</p>
+                                    <p>暂无资讯</p>
                                 </div>
                                 <div class="tab-pane" id="tab3">
-                                    <p>Howdy, I'm in Section 3.</p>
+                                    <p>暂无资讯</p>
                                 </div>
                             </div>
                         </div>
@@ -183,6 +191,66 @@
             </div>
         </div>
     </div>
+    
+    
+    <div class="modal fade" tabindex="-1" role="dialog" id="upgradeModal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">发布商品提示</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>您还不是卖家，请先升级成为卖家</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	        <a href="<%=PathUtil.getFullPath("user/upgrade")%>" class="btn btn-default">立刻升级</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" tabindex="-1" role="dialog" id="loginModal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">登陆提示</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>您还未登陆，请先登陆.....</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	        <a href="<%=PathUtil.getFullPath("home/login")%>" class="btn btn-default">立刻登陆</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+		
+    <script type="text/javascript">
+        $('.carousel').carousel({
+          interval: 4000
+        });
+        $(function(){
+            $(".panel-heading").click(function(e){
+                $(this).find("span").toggleClass("glyphicon-chevron-down");
+                $(this).find("span").toggleClass("glyphicon-chevron-up");
+            });
+        });
+        $(".vertical-nav").verticalnav({speed: 400,align: "left"});
+        $("#publish").click(function() {
+        	var role = $("#role").val();
+        	if(role == 0){
+        		$("#loginModal").modal('show');
+        	}else if(role == 1){
+        		$("#upgradeModal").modal('show');
+        	} else{
+        		window.location.href = "/AgricultureProduct/page/goods/publish";
+        	}
+        });
+    </script>
     <script type="text/javascript">
         $('.carousel').carousel({
           interval: 4000
@@ -195,6 +263,32 @@
         });
         $(".vertical-nav").verticalnav({speed: 400,align: "left"});
     </script>
+    <script type="text/javascript">
+		function currentTime(){
+		  var d=new Date(),str='';
+		  str+=d.getFullYear()+'年';
+		  str+=d.getMonth() + 1+'月';
+		  str+=d.getDate()+'日';
+		  str+=d.getHours()+':';
+		  str+= extra(d.getMinutes())+':';
+		  str+= extra(d.getSeconds());
+		  return str;
+		}
+		setInterval(function(){$('#currentTime').html(currentTime)},1000);
+		//补位函数。  
+	    function extra(x)  
+	    {  
+	        //如果传入数字小于10，数字前补一位0。  
+	        if(x < 10)  
+	        {  
+	            return "0" + x;  
+	        }  
+	        else  
+	        {  
+	            return x;  
+	        }  
+	    }  
+	</script>
 }
 </body>
 </html>

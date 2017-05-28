@@ -29,7 +29,6 @@ public class HomeController extends BaseController {
 	@RequestMapping(value = "/init-data", method = RequestMethod.GET)
     public ModelAndView getInitData() {
 	    List<Goods> goodsList = null;
-		User user = (User)this.getSession("USER");
 		Pagination pagination = new Pagination();
 		goodsList = goodsService.getGoodsListByUserId(pagination, 3);
 		List<TypeGroup> allTypeGroup = goodsService.getAllTypeGroup();

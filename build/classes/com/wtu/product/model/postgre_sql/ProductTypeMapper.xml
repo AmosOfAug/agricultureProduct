@@ -50,4 +50,26 @@
               type_group
       ]]>
   </select>
+  <select id="queryProductTypeByUser" resultMap="goodsTypeMap" parameterType="int">
+        <![CDATA[
+         SELECT 
+	         type_id,type_name,modifid as modified 
+	     FROM 
+	         good_type as a,user_good_type as b
+	     WHERE
+	         a.type_id = b.good_type_id
+	     AND 
+	         b.user_id = #{user_id}
+        ]]>
+    </select>
+    <select id="getProductTypeByGoodTypeId" resultMap="productTypeMap" parameterType="int">
+        <![CDATA[
+	     SELECT 
+	         pk_id,name,modified 
+	     FROM 
+	         product_type
+	     where 
+	         goods_type=#{type_id}
+	     ]]>
+    </select>
 </mapper>

@@ -14,12 +14,23 @@
         <result column="description" property="description"/>
         <result column="is_deleted" property="isDeleted"/>
     </resultMap>
-    <insert id="createGoods" parameterType="Goods" useGeneratedKeys="true" keyProperty="goodsId">
+    <insert id="createGoods" parameterType="Goods">
         <![CDATA[
             INSERT INTO
-                goods(goods_name, picture, price, unit, type,description,user_id,create_time,update_time)
+                goods(goods_name, picture, price, unit, type_id,description,user_id,create_time,update_time)
             VALUES
                 (#{goodsName}, #{picture}, #{price}, #{unit},#{type},#{description},#{userId}, Now(),Now())
+        ]]>
+       <selectKey keyProperty="goods_id" resultType="int">
+	      select LAST_INSERT_ID() as goods_id
+	      </selectKey>
+    </insert>
+    <insert id="createGoodsDescripeValue" parameterType="map">
+        <![CDATA[
+            INSERT INTO
+                goods_descrpe_values(good_id, descripe_values_id, modified)
+            VALUES
+                (#{goodsId}, #{descripeValuesId}, Now())
         ]]>
     </insert>
     <select id="getGoodsCount" resultType="Integer" parameterType="String">
@@ -44,51 +55,55 @@
             FROM
                 goods
             WHERE
-                user_id = 3
+                user_id = #{userId}
         ]]>
     </select>
-    <select id="queryAllGoods" resultMap="goodsMap" parameterType="map">
+    
+    <select id="deleteGoodsById" resultType="Integer" parameterType="Integer">
+        <![CDATA[
+            UPDATE goods
+            SET
+                is_deleted = 1
+            WHERE
+                goods_id = #{id}
+        ]]>
+    </select>
+    
+    <select id="queryAllGoodsByProductType" resultMap="goodsMap" parameterType="map">
         <![CDATA[
             SELECT 
-                a.pk_id, a.title, a.content_type_id, a.picture, a.content, a.modified, b.range_id, b.type_id
+                goods_id,goods_name, picture, price, unit, type_id,description,user_id,create_time,update_time,is_deleted
             FROM
-                message AS a,age_content AS b 
+                goods
             WHERE 
-                a.content_type_id = b.id
+                type_id = #{productTypeId}
             AND
-                a.title 
+                goods_name 
             LIKE
                 #{keyword}
             AND
-                a.deleted = false
+                is_deleted = 0
             ORDER BY
-                a.modified DESC
+                update_time DESC
             LIMIT
                 #{pageSize}
             OFFSET
                 #{offset}
         ]]>
     </select>
-    <select id="queryHotGoods" resultMap="goodsMap" parameterType="int">
+    <select id="getGoodsById" resultMap="goodsMap" parameterType="map">
         <![CDATA[
-                SELECT 
-                  t.pk_id, t.title,  t.content_type_id, t.picture, t.content, substring_index(group_concat(t.modified),',',1) modified, t.range_id,  t.type_id, t.name
-                FROM(
-                    SELECT 
-                            a.pk_id, a.title, a.content_type_id, a.picture, a.content, a.modified, b.range_id, b.type_id, c.name
-                    FROM
-                            message AS a,age_content AS b,education_type AS c  
-                    WHERE 
-                            a.content_type_id = b.id
-                    AND
-                            b.type_id = c.id
-                    AND
-                            a.deleted = false
-                    ORDER BY type_id ASC,modified DESC
-                ) AS t
-                GROUP BY content_type_id
+            SELECT 
+                goods_id,goods_name, picture, price, unit, type_id,description,user_id,create_time,update_time,is_deleted
+            FROM
+                goods
+            WHERE 
+                goods_id = #{productId}
+            AND
+                is_deleted = 0
         ]]>
     </select>
+  
     <select id="queryGoodsByUserId" resultMap="goodsMap" parameterType="map">
         <![CDATA[
             SELECT 

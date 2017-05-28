@@ -48,9 +48,7 @@ public class UserController extends BaseController {
         Map<String,String> message = new HashMap<String, String>();
         try {
             User user = null;
-            System.out.println(userName+":"+password);
             user = userService.login(userName, password);
-            System.out.println(user);
             user.setPassword("");
             this.addSession("USER", user);
             if (!StringUtil.isEmpty(queryString)) {
@@ -106,6 +104,14 @@ public class UserController extends BaseController {
         modelAndView.setViewName("register");
         return modelAndView;
     }
+    
+  //用户升级
+    @RequestMapping(value = "/upgrade", method = RequestMethod.GET)
+    public ModelAndView upgrade() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("upgrade");
+        return modelAndView;
+    }
 
     //注册
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -135,7 +141,11 @@ public class UserController extends BaseController {
                                     @RequestParam(value = "businessDescripe", defaultValue = "") String businessDescripe,
                                     @RequestParam(value = "types", defaultValue = "") String[] types
                                     ) {
-        ModelAndView modelAndView = new ModelAndView();
+        System.out.println(identifyId);
+        System.out.println(businessAddress);
+        System.out.println(businessDescripe);
+        //System.out.println(types.toString());
+    	ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         user.setRole("2");
         user.setIdentifyId(Integer.parseInt(identifyId));
@@ -143,28 +153,29 @@ public class UserController extends BaseController {
         user.setBusinessDescripe(businessDescripe);
         user.setUserId(AppContext.getContext().getUser().getUserId());
         userService.updateBusiness(user);
+        System.out.println(1);
         for(int i=0;i<types.length;i++){
         	userService.addBusinessGoodsType(AppContext.getContext().getUser().getUserId(), Integer.parseInt(types[i]));
         }
-        userService.getUserById(AppContext.getContext().getUser().getUserId());
+        user = userService.getUserById(AppContext.getContext().getUser().getUserId());
         this.addSession("USER", user);
         modelAndView.setView(this.getRedirectView("page/home/init-data"));
         return modelAndView;
     }
 
     //获取所有用户
-    @RequestMapping(value = "/all-users", method = RequestMethod.GET)
-    public ModelAndView allUser() {
-    	String currentPageStr="";
+    @RequestMapping(value = "/all-users/{currentPage}", method = RequestMethod.GET)
+    public ModelAndView allUser(@PathVariable("currentPage")String currentPage) {
+    	String currentPageStr= currentPage;
     	if (StringUtil.isEmpty(currentPageStr)) {
             currentPageStr = "1";
         }
-        Integer currentPage = Integer.parseInt(currentPageStr);
-        if (currentPage < 1) {
-            currentPage = 1;
+        Integer currentPage1 = Integer.parseInt(currentPageStr);
+        if (currentPage1 < 1) {
+            currentPage1 = 1;
         }
         Pagination pagination = new Pagination();
-        pagination.setCurrentPage(currentPage);
+        pagination.setCurrentPage(currentPage1);
     	List<User> allUser = userService.getAllUser(pagination);
     	this.addSession("allUser", allUser);
     	this.addSession("pagination", pagination);
@@ -175,18 +186,71 @@ public class UserController extends BaseController {
     
     //删除用户
     @RequestMapping(value = "/delete-user/{id}", method = RequestMethod.GET)
-    public ModelAndView showProfile(@PathVariable String id) {
+    public ModelAndView deleteUser(@PathVariable String id) {
     	userService.deleteUser(Integer.parseInt(id));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setView(this.getRedirectView("page/user/all-users"));
         return modelAndView;
     }
     
-    //跳向修改页面
+  //跳向个人信息页面
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     public ModelAndView editProfile() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("userinfo");
+        return modelAndView;
+    }
+  //修改个人信息
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ModelAndView updateProfile(  @RequestParam(value = "user_id", defaultValue = "") String userId,
+    									@RequestParam(value = "phone", defaultValue = "") String phone,
+            							@RequestParam(value = "user_name", defaultValue = "") String userName,
+            							@RequestParam(value = "sex", defaultValue = "") String sex) {
+    	User user = new User();
+    	user.setUserId(Integer.parseInt(userId));
+        user.setPhone(phone);
+        user.setUserName(userName);
+        user.setSex(sex);
+        userService.updateUser(user);
+        this.removeSession("USER");
+        User newUser = new User();
+        newUser = userService.getUserById(user.getUserId());
+        newUser.setPassword("");
+        this.addSession("USER", newUser);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("userinfo");
+        return modelAndView;
+    }
+    
+    //后台跳向个人页面
+    @RequestMapping(value = "/user-information/{id}", method = RequestMethod.GET)
+    public ModelAndView userProfile(@PathVariable String id) {
+    	User user = userService.getUserById(Integer.parseInt(id));
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("user-info");
+        return modelAndView;
+    }
+    
+  //修改个人信息
+    @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
+    public ModelAndView updateUserProfile(  @RequestParam(value = "user_id", defaultValue = "") String userId,
+    									@RequestParam(value = "role", defaultValue = "") String role,
+    									@RequestParam(value = "phone", defaultValue = "") String phone,
+            							@RequestParam(value = "user_name", defaultValue = "") String userName,
+            							@RequestParam(value = "sex", defaultValue = "") String sex) {
+    	User user = new User();
+    	user.setUserId(Integer.parseInt(userId));
+        user.setPhone(phone);
+        user.setRole(role);
+        user.setUserName(userName);
+        user.setSex(sex);
+        userService.updateUser(user);
+        User newUser = new User();
+        newUser = userService.getUserById(user.getUserId());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", newUser);
+        modelAndView.setViewName("user-info");
         return modelAndView;
     }
 

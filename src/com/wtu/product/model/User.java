@@ -15,7 +15,14 @@ public class User {
     private String sex;
     private String role;
     private String avatar;
-    private Date updateTime;
+    private Date createTime;
+    public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	private Date updateTime;
     private List<ShoppingAddress> shoppingAddress;
     private Integer identifyId;
     private String businessAddress;

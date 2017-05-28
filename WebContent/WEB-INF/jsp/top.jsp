@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.wtu.product.util.SystemPropertiesUtil" %>
 <%@ page import="com.wtu.product.util.PathUtil"%>
+<%@ page import="com.wtu.product.model.User"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -29,19 +30,37 @@
                        <option>河南</option>
                    </select>
                 </div>
-                <div class="col-md-3" style="margin-left:-23px;">
-                    <span style="color:#F47A11">你好，欢迎来到惠农农产品交易平台</span>
-                </div>
-                <div class="col-md-1" style="margin-left:-55px;">
-                    <span><a href="<%=PathUtil.getFullPath("home/login")%>" style="color:#000">请登陆</a></span>
-                </div>
-                <div class="col-md-1" style="margin-left:-41px;">
-                    <span><a href="<%=PathUtil.getFullPath("user/register")%>" style="color:#000">免费注册</a></span>
-                </div>
+                
+                    <% if(request.getSession().getAttribute("USER") == null){ %>
+	                    <div class="col-md-3" style="margin-left:-23px;">
+		                    <span style="color:#F47A11">你好，欢迎来到惠农农产品交易平台</span>
+		                </div>
+		                <div class="col-md-1" style="margin-left:-55px;">
+			                <span><a href="<%=PathUtil.getFullPath("home/login")%>" style="color:#000">请登陆</a></span>
+			            </div>
+			            <div class="col-md-1" style="margin-left:-41px;">
+		                    <span><a href="<%=PathUtil.getFullPath("user/register")%>" style="color:#000">注册</a></span>
+		                </div>
+		            <% } else { %>
+		                <div class="col-md-2" style="margin-left:-23px;">
+		                    <a href="#"><span style="color:#F47A11">你好，${USER.phone}</span></a>
+		                </div>
+		                <div class="col-md-1" style="margin-left:-41px;">
+		                    <span><a href="<%=PathUtil.getFullPath("user/logout")%>" style="color:#000">退出系统</a></span>
+		                </div>
+		      		<%}%>
+		      		<input type="hidden" value="${USER==null?0:USER.role}" id="role"/>
                 <div class="col-md-2 pull-right">
                     <ul class="list-inline">
-                        <li style="margin-left:26px;">我的惠农</li>
+                        <li style="margin-left:26px;"><a class="link" href="<%=PathUtil.getFullPath("user/my-order")%> ">我的订单</a></li>
                         <li style="margin-left:5px;">联系我们</li>
+                        <li style="margin-left:-310px;"><a class="link" href="<%=PathUtil.getFullPath("home/init-data")%> ">首页</a></li>
+                    	<li style="margin-left:-8px;" ><a class="link" href="<%=PathUtil.getFullPath("user/userinfo")%>" >我的信息</a></li>
+                    	<li style="margin-left:-38px;">
+	                    	<c:if test="${USER.role == 2}">
+	                        	<a class="link" href="<%=PathUtil.getFullPath("goods/mygoods/"+1)%>">我的商品</a>
+	                    	</c:if>
+                    	</li>
                     </ul>
                 </div>
             </div>
@@ -53,7 +72,7 @@
                 <a href="<%=PathUtil.getFullPath("home/init-data")%>"><img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/logo.jpg"></img></a>
             </div>
             <div class="col-md-2 pull-right" style="margin-right:-33px;margin-top:58px;">
-                <a class="btn btn-success" href="#">
+                <a class="btn btn-success" href="<%=PathUtil.getFullPath("goods/cart")%>">
                     <i class="glyphicon glyphicon-shopping-cart icon-white">我的购物车</i>
                 </a>
             </div>
@@ -69,7 +88,7 @@
                 <div class="col-md-12">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="输入货品名称" aria-describedby="basic-addon2">
-                        <span class="input-group-addon" id="basic-addon2" style="background:#5CB85C;color:#FFF">搜索</span>
+                        <span class="input-group-addon" id="basic-addon2" style="background:#5CB85C;color:#FFF;cursor:pointer">搜索</span>
                     </div>
                 </div>
             </div>
@@ -80,7 +99,7 @@
         <div class="container">
             <ul class="nav nav-pills">
                 <li class="active" style="width:194px;text-align:center;background-color: #0da944;"><a href="#" style="color:#FFF">惠农市场</a></li>
-                <li><a href="#" style="color:#FFF;width:110px;text-align:center;">供应大厅</a></li>
+                <li><a href="#" style="color:#FFF;width:110px;text-align:center;" id="publish">发布商品</a></li>
                 <li><a href="#" style="color:#FFF;width:110px;text-align:center;">采购大厅</a></li>
             </ul>
         </div>

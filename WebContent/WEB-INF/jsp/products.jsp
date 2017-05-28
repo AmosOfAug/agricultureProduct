@@ -70,9 +70,9 @@
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
-                                <li><a href="#">1</a></li>
+                                <li><a href="#">${pagination.currentPage }</a></li>
                                 <li><a href="#">/</a></li>
-                                <li><a href="#">5</a></li>
+                                <li><a href="#">${pagination.pageCount }</a></li>
                                 <li>
                                     <a href="#" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
@@ -84,70 +84,16 @@
             </div>
             <div class="row" style="margin-left:1px;margin-right:1px;">
                 <ul class="list-inline">
-                    <li class="col-md-3" style="border: 1px solid #EEE;margin-top:13px;">
-                        <a href="<%=PathUtil.getFullPath("home/product")%>" class="thumbnail" style="margin-bottom:8px;">
-                            <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/test7.JPEG">
-                        </a>
-                        <p style="color:red;margin-left:3px;margin-bottom:2px;">￥18元/斤</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">product1</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">shopper</p>
-                    </li>
-                    <li class="col-md-3" style="border: 1px solid #EEE;margin-top:13px;">
-                        <a href="<%=PathUtil.getFullPath("home/product")%>" class="thumbnail" style="margin-bottom:8px;">
-                            <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/test7.JPEG">
-                        </a>
-                        <p style="color:red;margin-left:3px;margin-bottom:2px;">￥18元/斤</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">product1</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">shopper</p>
-                    </li>
-                    <li class="col-md-3" style="border: 1px solid #EEE;margin-top:13px;">
-                        <a href="<%=PathUtil.getFullPath("home/product")%>" class="thumbnail" style="margin-bottom:8px;">
-                            <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/test7.JPEG">
-                        </a>
-                        <p style="color:red;margin-left:3px;margin-bottom:2px;">￥18元/斤</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">product1</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">shopper</p>
-                    </li>
-                    <li class="col-md-3" style="border: 1px solid #EEE;margin-top:13px;">
-                        <a href="<%=PathUtil.getFullPath("home/product")%>" class="thumbnail" style="margin-bottom:8px;">
-                            <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/test7.JPEG">
-                        </a>
-                        <p style="color:red;margin-left:3px;margin-bottom:2px;">￥18元/斤</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">product1</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">shopper</p>
-                    </li>
-                    <li class="col-md-3" style="border: 1px solid #EEE;margin-top:13px;">
-                        <a href="<%=PathUtil.getFullPath("home/product")%>" class="thumbnail" style="margin-bottom:8px;">
-                            <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/test7.JPEG">
-                        </a>
-                        <p style="color:red;margin-left:3px;margin-bottom:2px;">￥18元/斤</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">product1</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">shopper</p>
-                    </li>
-                    <li class="col-md-3" style="border: 1px solid #EEE;margin-top:13px;">
-                        <a href="<%=PathUtil.getFullPath("home/product")%>" class="thumbnail" style="margin-bottom:8px;">
-                            <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/test7.JPEG">
-                        </a>
-                        <p style="color:red;margin-left:3px;margin-bottom:2px;">￥18元/斤</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">product1</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">shopper</p>
-                    </li>
-                    <li class="col-md-3" style="border: 1px solid #EEE;margin-top:13px;">
-                        <a href="<%=PathUtil.getFullPath("home/product")%>" class="thumbnail" style="margin-bottom:8px;">
-                            <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/test7.JPEG">
-                        </a>
-                        <p style="color:red;margin-left:3px;margin-bottom:2px;">￥18元/斤</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">product1</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">shopper</p>
-                    </li>
-                    <li class="col-md-3" style="border: 1px solid #EEE;margin-top:13px;">
-                        <a href="<%=PathUtil.getFullPath("home/product")%>" class="thumbnail" style="margin-bottom:8px;">
-                            <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/test7.JPEG">
-                        </a>
-                        <p style="color:red;margin-left:3px;margin-bottom:2px;">￥18元/斤</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">product1</p>
-                        <p style="margin-left:3px;margin-bottom:2px;">shopper</p>
-                    </li>
+                    <c:forEach items="${allGoodsListByType}" var="goods">
+                        <li class="col-md-3" style="border: 1px solid #EEE;margin-top:13px;">
+	                        <a href="<%=PathUtil.getFullPath("goods/product")%>/${goods.goodsId}" class="thumbnail" style="margin-bottom:8px;">
+	                            <img src="/goods-image/${goods.picture}">
+	                        </a>
+	                        <p style="color:red;margin-left:3px;margin-bottom:2px;">￥${goods.price}/${goods.unit}</p>
+	                        <p style="margin-left:3px;margin-bottom:2px;">${goods.goodsName }</p>
+	                        <p style="margin-left:3px;margin-bottom:2px;">shopper</p>
+	                    </li>
+                    </c:forEach>
                 </ul>
             </div>
         </div>

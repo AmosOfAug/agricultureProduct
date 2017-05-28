@@ -150,15 +150,15 @@
                 </div>
                 <div class="col-md-4">
                     <div class="row">
-                        <h2>Product Name</h2>
-                        <small>update time</small>
+                        <h2>${GOODS.goodsName }</h2>
+                        <small>${GOODS.updateTime }</small>
                         <br>
                         <small>goods address</small>
                     </div>
                     <div class="row" style="background:#F5FBF2;margin-top:10px;">
                         <p style="margin-top:6px;margin-bottom:6px;margin-left:10px;">
                             <span style="font-size:20px;">价格:</span>
-                            <span style="color:red;font-size:24px;">85.00</span>
+                            <span style="color:red;font-size:24px;">${GOODS.price }</span>
                             <span style="font-size:20px;">元/只</span>
                         </p>
                     </div>
@@ -233,12 +233,9 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab1">
-                                <p style="margin-left:20px;margin-top:20px;">脆皮金桔清甜可口 皮脆肉鲜嫩 送礼佳品 不打催黄不打膨胀素 买得放心吃得放心 好山好水好果苗 欢迎您的来电 15877270051 </p>
+                                <p style="margin-left:20px;margin-top:20px;">${GOODS.description } </p>
                                 <div>
-                                    <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/juzi.jpg" style="margin-left:20px;margin-top:0px;">
-                                </div>
-                                <div>
-                                    <img src="<%=SystemPropertiesUtil.getPropetiesValueByKey(Constant.STATIC_URL)%>/static/images/zhuzi2.jpg" style="margin-left:20px;margin-top:10px;">
+                                    <img src="/goods-image/${GOODS.picture}" style="margin-left:20px;margin-top:0px;max-width:400px;max-height:400px;">
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab2">

@@ -16,7 +16,7 @@ public class ImageUpLoad {
 	    	types=fileName.indexOf(".")!=-1?fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()):null;
 	    	if (types!=null) {
 	    		if ("GIF".equals(types.toUpperCase())||"PNG".equals(types.toUpperCase())||"JPG".equals(types.toUpperCase())||"GIF".equals(types.toUpperCase())) {
-	    			String realPath="E:\\eclipse\\AgricultureProduct\\WebContent\\static\\goods-image";
+	    			String realPath="E:\\5-24\\AgricultureProduct\\WebContent\\static\\goods-image";
 	    			trueFileName=String.valueOf(System.currentTimeMillis())+fileName;
 	    			//path=realPath+/*System.getProperty("file.separator")+*/trueFileName;
 	    			File targetFile = new File(realPath, trueFileName);
